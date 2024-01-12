@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <title>Hangman</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/worldlist.js" defer></script>
+    <script src="js/script.js" defer></script>
+  </head>
+  <body>
+    <main class="main">
+      <div class="game">
+        <div class="left">
+          <img class="img" src="img/hangman-0.svg" />
+          <h1>HANGMAN GAME</h1>
+        </div>
+        <div class="right">
+          <ul class="word-display"></ul>
+          <h4>
+            Hint:Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+            Laborum, ipsum!
+          </h4>
+          <p>
+            Incorrect guessess:
+            <span class="chance">0/6</span>
+          </p>
+          <div class="keyboard"></div>
+        </div>
+      </div>
+      <div class="GameOver">
+        <h3 class="game-over__title">Game Over!</h3>
+        <h6 class="game-over__text-answer">The Correct Word Was: <span class="answer"></span></h6>
+        <button class="game-over__btn" onclick="location.reload()">PLAY AGAIN</button>
+      </div>
+    </main>
+  </body>
+</html>
