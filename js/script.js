@@ -21,7 +21,7 @@ const initializer = () => {
 
 
     gameover.classList.remove("show");
-    img.src = "../img/hangman-0.svg";
+    img.src = "./img/hangman-0.svg";
 
     let count = 0;
 
@@ -111,15 +111,15 @@ const initializer = () => {
                 const letterElem = document.querySelectorAll(".letter");
 
                 if (count >= 1 && count < 2) {
-                    img.src = "../img/hangman-1.svg";
+                    img.src = "./img/hangman-1.svg";
                 } else if (count >= 2 && count < 3) {
-                    img.src = "../img/hangman-2.svg";
+                    img.src = "./img/hangman-2.svg";
                 } else if (count >= 3 && count < 4) {
-                    img.src = "../img/hangman-4.svg";
+                    img.src = "./img/hangman-4.svg";
                 } else if (count >= 4 && count < 5) {
-                    img.src = "../img/hangman-5.svg";
+                    img.src = "./img/hangman-5.svg";
                 } else if (count >= 6 && count < 7) {
-                    img.src = "../img/hangman-6.svg";
+                    img.src = "./img/hangman-6.svg";
                     setTimeout(()=>{
                         gameOver(true);
                     },200)
