@@ -103,7 +103,7 @@
     opacity: 0.5;
 }
 
-.GameOver{
+.game-over{
     position: absolute;
     top:50%;
     left:50%;
@@ -119,7 +119,7 @@
 
 
 }
-.GameOver.show{
+.game-over.show{
     display: block;
 }
 .gameoverImg{
@@ -127,11 +127,11 @@
     margin-top:40px;
 
 }
-.GameOver h3{
+.game-over h3{
 
     font-size:35px;
 }
-.GameOver h6{
+.game-over h6{
     font-size: 15px;
 }
 
@@ -250,7 +250,7 @@
     .letter {
         width: 24px;
     }
-    
+
 
     .btn {
         width: 35px;

@@ -1,119 +1,234 @@
-const keyboard = document.querySelector(".keyboard");
-const h4 = document.querySelector("h4");
-const wordDisplay = document.querySelector(".word-display");
-const chance = document.querySelector(".chance");
-const img = document.querySelector(".img");
+const initializer = () => {
+    const keyboard = document.querySelector(".keyboard");
+    const h4 = document.querySelector("h4");
+    const wordDisplay = document.querySelector(".word-display");
+    const chance = document.querySelector(".chance");
+    const img = document.querySelector(".img");
 
-const gameover = document.querySelector(".GameOver");
-const gameoverimg = document.querySelector(".gameoverImg");
-const answer = document.querySelector(".answer");
-const h3 = document.querySelector("h3");
-const h6 = document.querySelector("h6");
+    const gameover = document.querySelector(".game-over");
+    const gameoverimg = document.querySelector(".gameoverImg");
+    const answer = document.querySelector(".answer");
+    const h3 = document.querySelector("h3");
+    const h6 = document.querySelector("h6");
+
+    const gameOverTitle = gameover.querySelector(".game-over__title");
+    const gameOverTextAnswer = gameover.querySelector(".game-over__text-answer");
 
 
-let count = 0;
+    const newGameButton = document.querySelector(".game-over__btn");
+    newGameButton.addEventListener("click", initializer);
 
-const randomIndex = Math.floor(Math.random() * wordList.length);
-const { word, hint } = wordList[randomIndex];
-console.log('word:',word);
 
-for (let i = 97; i <= 122; i++) {
-    let button = document.createElement("button");
-    button.classList.add("btn");
-    button.innerHTML = String.fromCharCode(i);
-    keyboard.appendChild(button);
+
+    gameover.classList.remove("show");
+    img.src = "../img/hangman-0.svg";
+
+    let count = 0;
+
+    const randomIndex = Math.floor(Math.random() * wordList.length);
+    const { word, hint } = wordList[randomIndex];
+    console.log('word:',word);
+
+    keyboard.innerHTML = "";
+    chance.innerText = "0/6";
+
+    for (let i = 97; i <= 122; i++) {
+        let button = document.createElement("button");
+        button.classList.add("btn");
+        button.innerHTML = String.fromCharCode(i);
+        keyboard.appendChild(button);
+    }
+
+    const gameOver = (bool) => {
+        if (bool) {
+            gameOverTitle.textContent = "Game over";
+            gameover.classList.add("show");
+            document.querySelector(".game").style.opacity = 0.8;
+            answer.textContent = word;
+
+        } else {
+
+            gameOverTitle.textContent = "Winner!"
+            gameover.classList.add("show");
+            document.querySelector(".game").style.opacity = 0.8;
+            answer.textContent = word;
+
+
+        }
+    };
+
+    const gameOverwin = () => {
+        const letterElem = document.querySelectorAll(".letter");
+        var matchLetter = "";
+
+        letterElem.forEach((v) => {
+            matchLetter += v.innerText.toLowerCase();
+        });
+        if (matchLetter === word) {
+            gameOver(false);
+        }
+    };
+
+    const matchWord = (val) => {
+        const matches = [];
+        word.split("").forEach((el, index) => {
+            if (el === val.toLowerCase()) {
+                matches.push(index);
+            }
+        });
+
+        if (matches.length === 0) {
+            count++;
+            chance.innerText = `${count}/6`;
+        } else {
+            matches.forEach((v) => {
+                const letterElem = document.querySelectorAll(".letter");
+                letterElem[v].innerText = val;
+                letterElem[v].classList.add("guess");
+            });
+        }
+    };
+
+    const loadQuestion = () => {
+        h4.innerText = `Hint: ${hint}`;
+        wordDisplay.innerHTML= '';
+        for (let i = 0; i < word.length; i++) {
+            let liTag = document.createElement("li");
+            liTag.classList.add("letter");
+            wordDisplay.appendChild(liTag);
+        }
+
+        const buttonTag = document.querySelectorAll(".btn");
+
+        buttonTag.forEach((v) => {
+            v.addEventListener("click", (e) => {
+                matchWord(e.target.innerText);
+
+                //console.log(e.target)
+
+                e.target.disabled = true;
+
+                const letterElem = document.querySelectorAll(".letter");
+
+                if (count >= 1 && count < 2) {
+                    img.src = "../img/hangman-1.svg";
+                } else if (count >= 2 && count < 3) {
+                    img.src = "../img/hangman-2.svg";
+                } else if (count >= 3 && count < 4) {
+                    img.src = "../img/hangman-4.svg";
+                } else if (count >= 4 && count < 5) {
+                    img.src = "../img/hangman-5.svg";
+                } else if (count >= 6 && count < 7) {
+                    img.src = "../img/hangman-6.svg";
+                    setTimeout(()=>{
+                        gameOver(true);
+                    },200)
+
+                }
+                gameOverwin();
+            });
+        });
+    };
+
+    loadQuestion();
+
+
 }
 
-const gameOver = (bool) => {
-    if (bool) {
-        gameover.classList.add("show");
-        document.querySelector(".game").style.opacity = 0.8;
-        answer.innerText = word;
-    } else {
-        gameover.classList.add("show");
-        document.querySelector(".game").style.opacity = 0.8;
-        gameoverimg.src = "../img/victory.gif";
-        h3.innerText="Congrats!"
-        h6.innerText="You Guessed The Correct Answer!"
-    }
-};
 
-const gameOverwin = () => {
-    const letterElem = document.querySelectorAll(".letter");
-    var matchLetter = "";
+const startHtml = () =>{
+    const body = document.querySelector('body');
 
-    letterElem.forEach((v) => {
-        matchLetter += v.innerText.toLowerCase();
-    });
-    if (matchLetter === word) {
-        gameOver(false);
-    }
-};
+    const main = document.createElement("main");
+    main.classList.add('main');
 
-const matchWord = (val) => {
-    const matches = [];
-    word.split("").forEach((el, index) => {
-        if (el === val.toLowerCase()) {
-            matches.push(index);
-        }
-    });
+    const game =  document.createElement("div");
+    game.classList.add('game');
 
-    if (matches.length === 0) {
-        count++;
-        chance.innerText = `${count}/6`;
-    } else {
-        matches.forEach((v) => {
-            const letterElem = document.querySelectorAll(".letter");
-            letterElem[v].innerText = val;
-            letterElem[v].classList.add("guess");
-        });
-    }
-};
+    //left
+    const createBlockLeft = document.createElement("div");
+    createBlockLeft.classList.add('left');
 
-const loadQuestion = () => {
-    h4.innerText = `Hint: ${hint}`;
+    const createBlockLeftImg = document.createElement("img");
+    createBlockLeftImg.classList.add('img');
+    createBlockLeftImg.src = "img/hangman-0.svg";
+    createBlockLeft.append(createBlockLeftImg);
 
-    for (let i = 0; i < word.length; i++) {
-        let liTag = document.createElement("li");
-        liTag.classList.add("letter");
-        wordDisplay.appendChild(liTag);
-    }
+    const createBlockLeftTitle = document.createElement("h1");
+    createBlockLeftTitle.textContent = "HANGMAN GAME";
+    createBlockLeft.append(createBlockLeftTitle);
 
-    const buttonTag = document.querySelectorAll(".btn");
+    game.append(createBlockLeft);
 
-    buttonTag.forEach((v) => {
-        v.addEventListener("click", (e) => {
-            matchWord(e.target.innerText);
+    //right
 
-            console.log(e.target)
+    const createBlockRight = document.createElement("div");
+    createBlockRight.classList.add('right');
 
-            e.target.disabled = true;
+    const createBlockRightUl = document.createElement("ul");
+    createBlockRightUl.classList.add('word-display');
 
-            const letterElem = document.querySelectorAll(".letter");
+    const createBlockRightH4 = document.createElement("h4");
 
-            if (count >= 1 && count < 2) {
-                img.src = "../img/hangman-1.svg";
-            } else if (count >= 2 && count < 3) {
-                img.src = "../img/hangman-2.svg";
-            } else if (count >= 3 && count < 4) {
-                img.src = "../img/hangman-4.svg";
-            } else if (count >= 4 && count < 5) {
-                img.src = "../img/hangman-5.svg";
-            } else if (count >= 6 && count < 7) {
-                img.src = "../img/hangman-6.svg";
-                setTimeout(()=>{
-                    gameOver(true);
-                },200)
+    const createBlockRightP = document.createElement("p");
+    createBlockRightP.textContent = "Incorrect guessess:";
+    const createBlockRightPSpan = document.createElement("span");
+    createBlockRightPSpan.classList.add('chance');
+    createBlockRightPSpan.textContent = '0/6';
 
-            }
-            gameOverwin();
-        });
-    });
-};
+    createBlockRightP.append(createBlockRightPSpan);
 
-loadQuestion();
+    const createBlockRightKeyboard = document.createElement("div");
+    createBlockRightKeyboard.classList.add('keyboard');
 
-//let button = document.createElement("button");
-//button.classList.add("btn")
-//button.innerHTML = String.fromCharCode(i);
-//keyboard.appendChild(button);
+
+    createBlockRight.append(createBlockRightUl);
+    createBlockRight.append(createBlockRightH4);
+    createBlockRight.append(createBlockRightP);
+    createBlockRight.append(createBlockRightKeyboard);
+
+    game.append(createBlockRight);
+
+
+    //game-over
+
+    const createGameOver = document.createElement("div");
+    createGameOver.classList.add('game-over');
+
+    const createGameOverTitle = document.createElement("h3");
+    createGameOverTitle.classList.add('game-over__title');
+
+    const createGameOverTextAnswer = document.createElement("h6");
+    createGameOverTextAnswer.classList.add('game-over__text-answer');
+    createGameOverTextAnswer.textContent = 'The Correct Word Was: ';
+
+    const createGameOverAnswer = document.createElement("span");
+    createGameOverAnswer.classList.add('answer');
+    createGameOverTextAnswer.append(createGameOverAnswer);
+
+    const createGameOverButton = document.createElement("button");
+    createGameOverButton.textContent = 'PLAY AGAIN';
+    createGameOverButton.classList.add('game-over__btn');
+
+
+    createGameOver.append(createGameOverTitle);
+    createGameOver.append(createGameOverTextAnswer);
+    createGameOver.append(createGameOverButton);
+
+
+    main.append(game);
+    main.append(createGameOver);
+
+    body.append(main);
+
+   initializer();
+
+}
+
+window.onload = startHtml;
+
+
+//window.onload = initializer;
+
+
+//newGameButton.addEventListener("click", initializer);
