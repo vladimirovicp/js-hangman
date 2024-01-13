@@ -18,8 +18,6 @@ const initializer = () => {
     const newGameButton = document.querySelector(".game-over__btn");
     newGameButton.addEventListener("click", initializer);
 
-
-
     gameover.classList.remove("show");
     img.src = "./img/hangman-0.svg";
 
@@ -70,6 +68,9 @@ const initializer = () => {
     };
 
     const matchWord = (val) => {
+
+        //console.log(val)
+
         const matches = [];
         word.split("").forEach((el, index) => {
             if (el === val.toLowerCase()) {
@@ -131,6 +132,59 @@ const initializer = () => {
     };
 
     loadQuestion();
+
+    window.addEventListener('keydown', e =>{
+
+        //console.log(e.key)
+
+        // const clickKey = e.key.toUpperCase();
+        // const codeKey = clickKey.charCodeAt(0);
+        //
+        // if (codeKey >= 65 && codeKey <= 90){
+        //     matchWord(clickKey.toLowerCase());
+        //     console.log(codeKey);
+        // }
+
+        if(e.keyCode >= 65 && e.keyCode <=90){
+            //console.log(e.key)
+
+            //console.log(keyboard)
+
+            if (!gameover.classList.contains('show')){
+                const currentKey = String.fromCharCode(e.keyCode).toLowerCase();
+
+                console.log(currentKey);
+
+                const btns = keyboard.querySelectorAll('.btn');
+
+                btns.forEach( item => {
+                    if(item.textContent === currentKey){
+                        if( item.disabled !== true){
+                            item.disabled = true;
+                            matchWord(e.key.toLowerCase());
+                            const letterElem = document.querySelectorAll(".letter");
+
+                            if (count >= 1 && count < 2) {
+                                img.src = "./img/hangman-1.svg";
+                            } else if (count >= 2 && count < 3) {
+                                img.src = "./img/hangman-2.svg";
+                            } else if (count >= 3 && count < 4) {
+                                img.src = "./img/hangman-4.svg";
+                            } else if (count >= 4 && count < 5) {
+                                img.src = "./img/hangman-5.svg";
+                            } else if (count >= 6 && count < 7) {
+                                img.src = "./img/hangman-6.svg";
+                                setTimeout(()=>{
+                                    gameOver(true);
+                                },200)
+                            }
+                            gameOverwin();
+                        }
+                    }
+                })
+            }
+        }
+    });
 
 
 }
