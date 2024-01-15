@@ -19,6 +19,7 @@ const initializer = () => {
     newGameButton.addEventListener("click", initializer);
 
     gameover.classList.remove("show");
+    document.body.classList.remove('_lock');
     img.src = "./img/hangman-0.svg";
 
     let count = 0;
@@ -42,6 +43,7 @@ const initializer = () => {
             gameOverTitle.textContent = "Game over";
             gameover.classList.add("show");
             document.querySelector(".game").style.opacity = 0.8;
+            document.body.classList.add('_lock');
             answer.textContent = word;
 
         } else {
@@ -49,6 +51,7 @@ const initializer = () => {
             gameOverTitle.textContent = "Winner!"
             gameover.classList.add("show");
             document.querySelector(".game").style.opacity = 0.8;
+            document.body.classList.add('_lock');
             answer.textContent = word;
 
 
