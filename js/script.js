@@ -119,8 +119,10 @@ const initializer = () => {
                 } else if (count >= 2 && count < 3) {
                     img.src = "./img/hangman-2.svg";
                 } else if (count >= 3 && count < 4) {
-                    img.src = "./img/hangman-4.svg";
+                    img.src = "./img/hangman-3.svg";
                 } else if (count >= 4 && count < 5) {
+                    img.src = "./img/hangman-4.svg";
+                } else if (count >= 5 && count < 6) {
                     img.src = "./img/hangman-5.svg";
                 } else if (count >= 6 && count < 7) {
                     img.src = "./img/hangman-6.svg";
