@@ -124,7 +124,7 @@ const initializer = () => {
                     img.src = "./img/hangman-4.svg";
                 } else if (count >= 5 && count < 6) {
                     img.src = "./img/hangman-5.svg";
-                } else if (count >= 6 && count < 7) {
+                } else if (count === 6) {
                     img.src = "./img/hangman-6.svg";
                     setTimeout(()=>{
                         gameOver(true);
