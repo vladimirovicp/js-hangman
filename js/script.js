@@ -1,4 +1,5 @@
 const initializer = () => {
+
     const keyboard = document.querySelector(".keyboard");
     const h4 = document.querySelector("h4");
     const wordDisplay = document.querySelector(".word-display");
@@ -45,17 +46,14 @@ const initializer = () => {
             document.querySelector(".game").style.opacity = 0.8;
             document.body.classList.add('_lock');
             answer.textContent = word;
-
         } else {
-
             gameOverTitle.textContent = "Winner!"
             gameover.classList.add("show");
             document.querySelector(".game").style.opacity = 0.8;
             document.body.classList.add('_lock');
             answer.textContent = word;
-
-
         }
+        window.removeEventListener('keydown', handleKeydown);
     };
 
     const gameOverwin = () => {
@@ -138,30 +136,11 @@ const initializer = () => {
 
     loadQuestion();
 
-    window.addEventListener('keydown', e =>{
-
-        //console.log(e.key)
-
-        // const clickKey = e.key.toUpperCase();
-        // const codeKey = clickKey.charCodeAt(0);
-        //
-        // if (codeKey >= 65 && codeKey <= 90){
-        //     matchWord(clickKey.toLowerCase());
-        //     console.log(codeKey);
-        // }
-
+    function handleKeydown(e){
         if(e.keyCode >= 65 && e.keyCode <=90){
-            //console.log(e.key)
-
-            //console.log(keyboard)
-
             if (!gameover.classList.contains('show')){
                 const currentKey = String.fromCharCode(e.keyCode).toLowerCase();
-
-                console.log(currentKey);
-
                 const btns = keyboard.querySelectorAll('.btn');
-
                 btns.forEach( item => {
                     if(item.textContent === currentKey){
                         if( item.disabled !== true){
@@ -189,7 +168,9 @@ const initializer = () => {
                 })
             }
         }
-    });
+    }
+
+    window.addEventListener('keydown', handleKeydown);
 
 
 }
